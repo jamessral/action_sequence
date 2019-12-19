@@ -29,8 +29,8 @@ module ActionSequence
       @error_message = error_message
     end
 
-    def fetch(key)
-      @context.fetch(key)
+    def fetch(key, default)
+      @context.fetch(key, default)
     end
   end
 end
