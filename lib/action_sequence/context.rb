@@ -14,7 +14,7 @@ module ActionSequence
     end
 
     def add_to_context!(hash)
-      @context.merge!(hash)
+      context.merge!(hash)
     end
 
     def failed?
@@ -30,7 +30,11 @@ module ActionSequence
     end
 
     def fetch(key, default)
-      @context.fetch(key, default)
+      context.fetch(key, default)
     end
+
+    private
+
+    attr_reader :context
   end
 end

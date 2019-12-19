@@ -12,13 +12,17 @@ module ActionSequence
     end
 
     def call
-      @actions.each do |action|
-        return @context if @context.failed?
+      actions.each do |action|
+        return context if context.failed?
 
-        action.call(@context)
+        action.call(context)
       end
 
       @context
     end
+
+    private
+
+    attr_reader :actions, :context
   end
 end

@@ -4,11 +4,21 @@ module ActionSequence
   ###
   # A Sequence that calls its actions in a transaction
   ##
-  class TransactionSequence < Sequence
+  class TransactionSequence
+    def initialize(actions: [], initial_context: {}, transaction:)
+      @actions = actions
+      @context = Context.new(initial_context: initial_context)
+      @transaction = transaction
+    end
+
     def call
-      ::ActiveRecord::Base.transaction do
+      transaction do
         super
       end
     end
+
+    private
+
+    attr_reader :transaction
   end
 end
