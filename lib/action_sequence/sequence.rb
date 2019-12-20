@@ -18,7 +18,7 @@ module ActionSequence
         action.call(context)
       end
 
-      @context
+      context
     end
 
     private
