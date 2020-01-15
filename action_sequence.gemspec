@@ -11,8 +11,7 @@ Gem::Specification.new do |s|
   s.files = [
     'lib/action_sequence.rb',
     'lib/action_sequence/context.rb',
-    'lib/action_sequence/sequence.rb',
-    'lib/action_sequence/transaction_sequence.rb'
+    'lib/action_sequence/sequence.rb'
   ]
   s.homepage =
     'https://rubygems.org/gems/action_sequence'
