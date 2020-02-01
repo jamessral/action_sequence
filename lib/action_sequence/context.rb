@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
+require 'forwardable'
+
 module ActionSequence
   ###
   # Context container to hold state for an
   # Sequence of Actions
   ##
   class Context
+    extend Forwardable
     attr_reader :error_message
+
+    def_delegators :@context, :fetch
 
     def initialize(initial_context: {})
       @context = initial_context
@@ -27,10 +32,6 @@ module ActionSequence
 
     def fail_context!(error_message)
       @error_message = error_message
-    end
-
-    def fetch(key, default)
-      context.fetch(key, default)
     end
 
     private

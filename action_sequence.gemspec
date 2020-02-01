@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'action_sequence'
-  s.version = '0.1.2'
+  s.version = '0.1.3'
   s.date = '2019-12-18'
   s.summary = 'A small gem for managing sequences of actions over a shared-context'
   s.description = 'A small gem for managing sequences of actions over a shared-context'
