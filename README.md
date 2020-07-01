@@ -24,14 +24,13 @@ class SomeSweetController < ActionController
 
     if awesome_data.valid?
       awesome_data.do_something_dangerous!
-  else
+    else
       somehow_handle_the_error
     end
 
     if awesome_data.still_valid?
       awesome_data.do_something_else
     end
-
     # ...
   end
 end
@@ -43,20 +42,14 @@ What if instead we could describe the operations that we want to run, capture an
 
 ```ruby
 class SomeServiceObject
-  attr_reader :sequence
-
-  def initialize(awesome_data)
-    @sequence = ActionSequence::Sequence.new(
+  def self.call(awesome_data:)
+    ActionSequence::Sequence.new(
       actions: my_actions,
       initial_context: { awesome_data: awesome_data }
-    )
+    ).call
   end
 
-  def self.call
-    sequence.call
-  end
-
-  def my_actions
+  def self.my_actions
     [
       ensure_data_present,
       transform_awesome_data,
@@ -68,7 +61,7 @@ class SomeServiceObject
   # These can live anywhere you want. They just need to respond to
   # `call` with a single argument of the shared context
   # Perhaps a lambda or even another service object like this one!
-  def ensure_data_present
+  def self.ensure_data_present
     lambda do |context|
       if context.fetch(:awesome_data, nil).nil?
         context.fail_context!("There must be data and it must be awesome")
@@ -76,15 +69,15 @@ class SomeServiceObject
     end
   end
 
-  def do_one_thing
+  def self.do_one_thing
     -> (context) { context.fetch(:awesome_data).do_one_thing }
   end
 
-  def transform_param
+  def self.transform_param
     -> (context) { context.fetch(:awesome_data).do_some_thing_dangerous! }
   end
 
-  def ensure_awesome_data_is_valid
+  def self.ensure_awesome_data_is_valid
     lambda do |context|
       if context.fetch(:awesome_data).valid?
         context.fail_context!("Awesome Data invalid")
